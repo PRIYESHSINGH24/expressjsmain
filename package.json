@@ -1,0 +1,22 @@
+{
+  "name": "expressjs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm install express"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/PRIYESHSINGH/expressjs"
+  },
+  "keywords": [
+    "initial",
+    "commit"
+  ],
+  "author": "PRIYESH SINGH",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "expressjs": "^1.0.1"
+  }
+}
