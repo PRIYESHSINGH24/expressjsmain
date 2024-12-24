@@ -93,3 +93,18 @@ function isThereatleastoneunhealthy() {
 app.listen(3000, () => {
     console.log("Server is running on port 3000");
 });
+
+
+//logic to read t5he file in the express
+fs.readfile("a.txt", function(err,data){
+    console.log(data);
+})
+
+
+// if we add the colon in the request section the request should reach there 
+app.get("/files/:filenam", function(req,res){
+    const name = req.params.filename;
+    console.log(name);
+    res.json({});
+
+});
