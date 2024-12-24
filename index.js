@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 
+app.use(express.json());
+
 const user = [
     {
         name: "PRIYESH SINGH",
@@ -14,20 +16,36 @@ const user = [
 
 app.get("/", function (req, res) {
     const priyesh = user[0].kidneys;
-    const numberofkidneys = priyesh.length; // Use 'priyesh' here instead of 'kidneys'
-    let numberofhealthykidney = 0;
-    for(let i = 0 ; i < priyesh.length ; i++){
+    const numberOfKidneys = priyesh.length;
+    let numberOfHealthyKidneys = 0;
+
+    for (let i = 0; i < priyesh.length; i++) {
         if (priyesh[i].healthy) {
-            numberofhealthykidney = numberofhealthykidney + 1;
+            numberOfHealthyKidneys++;
         }
     }
-    const numberofnunhealthykidneys = numberofkidneys - numberofhealthykidney;
-    res.json ({
-        priyesh,
-        numberofhealthykidney,
-        numberofnunhealthykidneys,
-    })
-    res.send(`Number of kidneys of the priyesh: ${numberofkidneys}`);
+
+    const numberOfUnhealthyKidneys = numberOfKidneys - numberOfHealthyKidneys;
+
+    res.json({
+        totalKidneys: numberOfKidneys,
+        healthyKidneys: numberOfHealthyKidneys,
+        unhealthyKidneys: numberOfUnhealthyKidneys
+    });
+});
+
+app.post("/", function (req, res) {
+    const isHealthy = req.body.isHealthy;
+
+    user[0].kidneys.push({
+        healthy: isHealthy
+    });
+
+    res.json({
+        msg: "Kidney added successfully!",
+        totalKidneys: user[0].kidneys.length,
+        updatedKidneys: user[0].kidneys
+    });
 });
 
 app.listen(3000, () => {
