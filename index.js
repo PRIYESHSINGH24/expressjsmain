@@ -1,36 +1,35 @@
-// steps for the creation of the code in the express 
-// creating an https server 
-// express 
-// node default library => no
-
-
-
 const express = require("express");
-
 const app = express();
 
-
-app.get('/', function(req, res) { 
-    // req = request , res = response method
-    const n = parseInt(req.query.n);
-    // Convert query param to a number
-    const sumResult = sum(n);
-    // Call the sum function
-    res.send("Hi, ans is " + sumResult); 
-    // Use the correct variable name
-})
-
-function sum(n){
-    let ans = 0;
-    for (let i = 0 ; i <= n ; i++){
-        ans = ans+i;
+const user = [
+    {
+        name: "PRIYESH SINGH",
+        kidneys: [
+            {
+                healthy: false
+            }
+        ]
     }
-    return ans;
-}
+];
 
+app.get("/", function (req, res) {
+    const priyesh = user[0].kidneys;
+    const numberofkidneys = priyesh.length; // Use 'priyesh' here instead of 'kidneys'
+    let numberofhealthykidney = 0;
+    for(let i = 0 ; i < priyesh.length ; i++){
+        if (priyesh[i].healthy) {
+            numberofhealthykidney = numberofhealthykidney + 1;
+        }
+    }
+    const numberofnunhealthykidneys = numberofkidneys - numberofhealthykidney;
+    res.json ({
+        priyesh,
+        numberofhealthykidney,
+        numberofnunhealthykidneys,
+    })
+    res.send(`Number of kidneys of the priyesh: ${numberofkidneys}`);
+});
 
-
-app.listen(3000); 
-//this is the creating the server
-
-// we can run iconfig in the laptop to find the dns number of the page for running deployed on the page
+app.listen(3000, () => {
+    console.log("Server is running on port 3000");
+});
