@@ -56,19 +56,39 @@ app.put("/",function(req,res){
     res.json({});
 })
 
-app.delete("/", function(req,res){
-    const newkidneys = [];
-    for(let i = 0 ; i < user[0].kidneys.length; i++){
-        if(user[0].kidneys[i].healthy){
-            newkidneys.push({
-                healthy: true
-            })
+app.delete("/", function (req, res) {
+    const isThereAtLeastOneUnhealthy = () => {
+        return user[0].kidneys.some(kidney => !kidney.healthy);
+    };
+
+    if (isThereAtLeastOneUnhealthy()) {
+        let atLeastOneUnhealthy = false;
+        const newKidneys = [];
+        for (let i = 0; i < user[0].kidneys.length; i++) {
+            if (user[0].kidneys[i].healthy) {
+                newKidneys.push(user[0].kidneys[i]); // Add healthy kidneys to the new array
+            } else {
+                atLeastOneUnhealthy = true; // Mark that there is at least one unhealthy kidney
+            }
+        }
+        user[0].kidneys = newKidneys; // Update kidneys
+        res.json({ msg: "Unhealthy kidneys removed" });
+    } else {
+        res.status(411).json({
+            msg: "You have no bad kidney"
+        });
+    }
+});
+
+function isThereatleastoneunhealthy() {
+    let atleastoneunhealthy = false;
+    for(let i = 0 ; i<user[0].kidneys.length; i++){
+        if(!user[0].kidneys[i].healthy){
+            atleastoneunhealthy = true;
         }
     }
-    user[0].kidneys = newkidneys;
-    res.json({msg:"done"})
-})
-
+    return atleastoneunhealthy;
+}
 
 app.listen(3000, () => {
     console.log("Server is running on port 3000");
