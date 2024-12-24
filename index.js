@@ -48,6 +48,16 @@ app.post("/", function (req, res) {
     });
 });
 
+
+app.put("/",function(req,res){
+    for(let i = 0 ; i < user[0].kidneys.length; i++){
+        user[0].kidneys[i].healthy = true;
+    }
+    res.json({});
+})
+
+
+
 app.listen(3000, () => {
     console.log("Server is running on port 3000");
 });
